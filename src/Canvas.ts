@@ -25,6 +25,24 @@ export default class Canvas {
 		return this.getInstance().ctx;
 	}
 
+	public draw(type: DrawType, x:number, y:number){
+		switch(type){
+			case DrawType.Pixel:
+				this.drawPixel(x,y);
+				break;
+			case DrawType.Line:
+				break;
+			case DrawType.Brush:
+				break;
+			case DrawType.bucket:
+				break;
+		}
+	}
+
+	public drawPixel(x: number, y: number){
+
+	}
+
 	public zoomIn() {
 		this.scale += 0.1;
 		this.updateTransform();
@@ -63,4 +81,11 @@ export default class Canvas {
 		const deltaY = e.clientY - startY;
 		this.updateTransformFromDeltas(deltaX, deltaY);
 	}
+
+}
+enum DrawType{
+	Pixel,
+	Line,
+	Brush,
+	bucket,
 }

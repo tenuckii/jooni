@@ -26,12 +26,14 @@ let lastX = 0;
 let lastY = 0;
 
 canvas.addEventListener("mousedown", (e) => {
+	if (Cursor.state === 0 || e.ctrlKey) return;
 	isDrawing = true;
+	ctx!.fillRect(e.offsetX,e.offsetY,1,1);
 	[lastX, lastY] = [e.offsetX, e.offsetY];
 });
 
 canvas.addEventListener("mousemove", (e) => {
-	if (Cursor.state === 0 || !isDrawing) return;
+	if (Cursor.state === 0 || !isDrawing || e.ctrlKey ) return;
 	ctx!.beginPath();
 	ctx!.moveTo(lastX, lastY);
 	ctx!.lineTo(e.offsetX, e.offsetY);
@@ -57,8 +59,6 @@ window.addEventListener(
 let mouseDown = false;
 let startX = 0;
 let startY = 0;
-let currentTranslateX = 0;
-let currentTranslateY = 0;
 
 window.addEventListener("mousedown", (e) => {
 	mouseDown = true;
@@ -73,7 +73,7 @@ window.addEventListener("mouseup", () => {
 });
 
 window.addEventListener("mousemove", (e) => {
-	if (mouseDown && e.ctrlKey && Cursor.state === 0) {
+	if (mouseDown && e.ctrlKey) {
 		canIn.moveCanvas(e, startX, startY);
 	}
 });
