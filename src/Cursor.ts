@@ -73,6 +73,12 @@ export default class Cursor {
 		this.positionX = x;
 		this.positionY = y;
 	}
+	public getX() {
+		return this.positionX;
+	}
+	public getY() {
+		return this.positionY;
+	}
 }
 
 enum CursorState {
