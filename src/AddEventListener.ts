@@ -1,8 +1,8 @@
 import Canvas from "./Canvas";
 import Cursor from "./Cursor";
 
-const canIn= Canvas.getInstance();
-const curIn= Cursor.getInstance();
+const canIn = Canvas.getInstance();
+const curIn = Cursor.getInstance();
 
 document
 	.getElementById("zoomInBtn")
@@ -31,16 +31,45 @@ canvas.addEventListener("mousedown", (e) => {
 });
 
 canvas.addEventListener("mousemove", (e) => {
-	if (!isDrawing) return;
+	if (Cursor.state === 0 || !isDrawing) return;
 	ctx!.beginPath();
 	ctx!.moveTo(lastX, lastY);
 	ctx!.lineTo(e.offsetX, e.offsetY);
 	ctx!.stroke();
 	[lastX, lastY] = [e.offsetX, e.offsetY];
-});
+});2
 
 canvas.addEventListener("mouseup", () => {
 	isDrawing = false;
 });
 
-canvas.addEventListener("click", () => {});
+window.addEventListener("wheel", function (e) {
+	if (e.ctrlKey) {
+		e.preventDefault();
+		canIn.ctrlZoom(e.deltaY);
+	}
+}, { passive: false });
+
+let mouseDown = false;
+let startX = 0;
+let startY = 0;
+let currentTranslateX = 0;
+let currentTranslateY = 0;
+
+window.addEventListener("mousedown", (e) => {
+	mouseDown = true;
+	startX = e.clientX;
+	startY = e.clientY;
+});
+window.addEventListener("mouseup", () => {
+	if (mouseDown) {
+		canIn.setTranslations();
+	}
+	mouseDown = false;
+});
+
+window.addEventListener("mousemove", (e) => {
+	if (mouseDown && e.ctrlKey && Cursor.state === 0) {
+		canIn.moveCanvas(e, startX, startY);
+	}
+});

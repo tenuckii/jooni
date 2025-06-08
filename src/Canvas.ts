@@ -3,7 +3,9 @@ export default class Canvas {
 	private canvas: HTMLCanvasElement;
 	private ctx: CanvasRenderingContext2D;
 
-	private zoom: number = 1;
+	private scale: number = 1;
+	private translateX = 0;
+	private translateY = 0;
 
 	private constructor() {
 		this.canvas = <HTMLCanvasElement>document.querySelector("canvas");
@@ -24,16 +26,41 @@ export default class Canvas {
 	}
 
 	public zoomIn() {
-		this.zoom += 0.1;
-		this.updateZoom();
+		this.scale += 0.1;
+		this.updateTransform();
 	}
 
 	public zoomOut() {
-		this.zoom = Math.max(0.1, this.zoom - 0.1); // Prevent negative zoom
-		this.updateZoom();
+		this.scale = Math.max(0.1, this.scale - 0.1);
+		this.updateTransform();
 	}
 
-	private updateZoom() {
-		this.canvas.style.transform = `scale(${this.zoom})`;
+	private updateTransform() {
+		this.canvas.style.transform = `translate(${this.translateX}px, ${this.translateY}px) scale(${this.scale})`;
+	}
+	private updateTransformFromDeltas(deltaX: number, deltaY: number) {
+		this.canvas.style.transform = `translate(${this.translateX - deltaX}px, ${this.translateY - deltaY}px) scale(${this.scale})`;
+	}
+
+	public ctrlZoom(deltaY: number) {
+		const delta = deltaY > 0 ? -0.1 : 0.1;
+		this.scale += delta;
+		this.scale = Math.max(0.1, Math.min(this.scale, 5));
+		this.updateTransform();
+	}
+
+	public setTranslations() {
+		const transform = this.canvas.style.transform;
+		const match = transform.match(/translate\((-?\d+)px,\s*(-?\d+)px\)/);
+		if (match) {
+			this.translateX = parseInt(match[1], 10);
+			this.translateY = parseInt(match[2], 10);
+		}
+	}
+
+	public moveCanvas(e: MouseEvent, startX: number, startY: number) {
+		const deltaX = e.clientX - startX;
+		const deltaY = e.clientY - startY;
+		this.updateTransformFromDeltas(deltaX, deltaY);
 	}
 }
