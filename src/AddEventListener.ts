@@ -37,18 +37,22 @@ canvas.addEventListener("mousemove", (e) => {
 	ctx!.lineTo(e.offsetX, e.offsetY);
 	ctx!.stroke();
 	[lastX, lastY] = [e.offsetX, e.offsetY];
-});2
+});
 
 canvas.addEventListener("mouseup", () => {
 	isDrawing = false;
 });
 
-window.addEventListener("wheel", function (e) {
-	if (e.ctrlKey) {
-		e.preventDefault();
-		canIn.ctrlZoom(e.deltaY);
-	}
-}, { passive: false });
+window.addEventListener(
+	"wheel",
+	function (e) {
+		if (e.ctrlKey) {
+			e.preventDefault();
+			canIn.ctrlZoom(e.deltaY);
+		}
+	},
+	{ passive: false },
+);
 
 let mouseDown = false;
 let startX = 0;
