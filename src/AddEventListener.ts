@@ -33,12 +33,13 @@ let lastY = 0;
 canvas.addEventListener("mousedown", (e) => {
 	if (!curIn.tool.canDraw() || e.ctrlKey) return;
 	drawCtx.setStrategy(new PixelStrategy());
-	drawCtx.draw(Canvas.ctx, e.offsetX, e.offsetY);
+	drawCtx.draw( e.offsetX, e.offsetY);
+	isDrawing = true;
 	[lastX, lastY] = [e.offsetX, e.offsetY];
 });
 
 canvas.addEventListener("mousemove", (e) => {
-	if (curIn.tool.canDraw() || !isDrawing || e.ctrlKey) return;
+	if (!curIn.tool.canDraw() || !isDrawing || e.ctrlKey) return;
 	ctx!.beginPath();
 	ctx!.moveTo(lastX, lastY);
 	ctx!.lineTo(e.offsetX, e.offsetY);
