@@ -1,5 +1,10 @@
+import DrawContext from "./2dContext/draw/DrawContext";
+import { PixelStrategy } from "./2dContext/draw/lib";
 import Canvas from "./Canvas";
-import Cursor from "./Cursor";
+import Cursor from "./cursor/Cursor";
+import { IndexTool } from "./cursor/tools/IndexTool";
+
+const drawCtx = new DrawContext(null, Canvas.ctx);
 
 const canIn = Canvas.getInstance();
 const curIn = Cursor.getInstance();
@@ -26,14 +31,14 @@ let lastX = 0;
 let lastY = 0;
 
 canvas.addEventListener("mousedown", (e) => {
-	if (Cursor.state === 0 || e.ctrlKey) return;
-	isDrawing = true;
-	ctx!.fillRect(e.offsetX,e.offsetY,1,1);
+	if (!curIn.tool.canDraw() || e.ctrlKey) return;
+	drawCtx.setStrategy(new PixelStrategy());
+	drawCtx.draw(Canvas.ctx, e.offsetX, e.offsetY);
 	[lastX, lastY] = [e.offsetX, e.offsetY];
 });
 
 canvas.addEventListener("mousemove", (e) => {
-	if (Cursor.state === 0 || !isDrawing || e.ctrlKey ) return;
+	if (curIn.tool.canDraw() || !isDrawing || e.ctrlKey) return;
 	ctx!.beginPath();
 	ctx!.moveTo(lastX, lastY);
 	ctx!.lineTo(e.offsetX, e.offsetY);
@@ -77,3 +82,13 @@ window.addEventListener("mousemove", (e) => {
 		canIn.moveCanvas(e, startX, startY);
 	}
 });
+
+let indexTool = new IndexTool().getCursorStyleFill();
+
+document.getElementById("dock")!.style.cursor = indexTool;
+document
+	.getElementById("dock")!
+	.querySelectorAll("*")
+	.forEach((el) => {
+		(el as HTMLElement).style.cursor = indexTool;
+	});
