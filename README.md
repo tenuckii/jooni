@@ -31,7 +31,3 @@ Run `npm run format` to apply Prettier formatting.
 ## Deployment
 
 The repository contains a `CNAME` file indicating the site is deployed to `jooni.world`​:codex-file-citation[codex-file-citation]{line_range_start=1 line_range_end=null path=CNAME git_url="https://github.com/tenuckii/jooni/blob/master/CNAME#L1-Lnull"}​.
-
-## License
-
-This project is licensed under the ISC License as noted in `package.json`​:codex-file-citation[codex-file-citation]{line_range_start=1 line_range_end=18 path=package.json git_url="https://github.com/tenuckii/jooni/blob/master/package.json#L1-L18"}​.
