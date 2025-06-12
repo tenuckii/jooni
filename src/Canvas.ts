@@ -58,17 +58,13 @@ export default class Canvas {
 		this.canvas.style.transform = `translate(${this.translateX - deltaX}px, ${this.translateY - deltaY}px) scale(${this.scale})`;
 	}
 
-	private updateTransformScale(scale: number) {
-		this.scale = scale;
-		this.canvas.style.transform = `translate(${this.translateX}px, ${this.translateY}px) scale(${this.scale})`;
-	}
 	public updateTransformAll(deltaX: number, deltaY: number,scale: number) {
 		this.translateX = deltaX;
 		this.translateY = deltaY;
 		this.scale = scale;
 		this.canvas.style.transform = `translate(${this.translateX}px, ${this.translateY}px) scale(${this.scale})`;
 	}
-
+	
 	public ctrlZoom(deltaY: number) {
 		const delta = deltaY > 0 ? -0.1 : 0.1;
 		this.scale += delta;
