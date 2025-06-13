@@ -1,11 +1,12 @@
 import DrawContext from "./2dContext/draw/DrawContext";
 import { PixelStrategy } from "./2dContext/draw/lib";
 import Canvas from "./Canvas";
+import ColorContext from "./color/ColorContext";
 import Cursor from "./cursor/Cursor";
 import { IndexTool } from "./cursor/tools/IndexTool";
 
 const drawCtx = new DrawContext(null, Canvas.ctx);
-
+const colorCtx = ColorContext.getInstance();
 const canIn = Canvas.getInstance();
 const curIn = Cursor.getInstance();
 
@@ -95,18 +96,14 @@ document
 	});
 
 window.addEventListener("load", () => {
-	// Get viewport size
 	const viewportWidth = window.innerWidth;
 	const viewportHeight = window.innerHeight;
-	// Calculate scale factor to make canvas take ~50% of window (based on smaller side)
 	const scaleFactor =
 		0.5 *
 		Math.min(viewportWidth / canvas.width, viewportHeight / canvas.height);
 
-	// Clear and reset transformations
 	ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-	// Translate to center
 	const centerX = viewportWidth / 2 - canvas.width / 2;
 	const centerY = viewportHeight / 2 - canvas.height / 2;
 

@@ -11,7 +11,6 @@ export default class DrawContext {
 
 	draw(...args: any[]) {
 		if (!this.strategy) throw Error("Strategy needs to be define");
-		// if (!this.cursor.AbleToDraw()) return;
 		this.strategy!.draw(this.ctx, ...args);
 	}
 }

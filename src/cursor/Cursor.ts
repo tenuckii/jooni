@@ -3,6 +3,7 @@ import { CursorState } from "./CursorState";
 import { getToolByState } from "../utils/CursorHelpers";
 import { renderCursorMenu } from "./CursorMenu";
 import { IndexTool } from "./tools/tools";
+import { renderColorPalette, unRenderColorPalette } from "../color/ColorMenu";
 
 export default class Cursor {
 	private static instance: Cursor;
@@ -58,6 +59,9 @@ export default class Cursor {
 		this.currentState = state;
 		this.currentTool = getToolByState(state);
 		this.applyState();
+
+		if (this.currentTool.canDraw()) renderColorPalette();
+		else unRenderColorPalette();
 
 		if (document.body.contains(this.cursorMenu)) {
 			document.body.removeChild(this.cursorMenu);

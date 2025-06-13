@@ -58,3 +58,17 @@ canvas {
 .hidden {
 	display: none;
 }
+
+.color-icon {
+	width: 24px;
+	height: 24px;
+	background-color: #000;
+	display: inline-block;
+	border-radius: 4px;
+	border: 2px solid #aaa;
+	cursor: pointer;
+}
+
+.hidden-input {
+	display: none;
+}
