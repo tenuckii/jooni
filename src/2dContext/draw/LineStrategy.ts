@@ -1,3 +1,4 @@
+import ColorContext from "../../color/ColorContext";
 import DrawStrategy from "./DrawStrategy";
 
 export default class LineStrategy implements DrawStrategy {
@@ -8,6 +9,7 @@ export default class LineStrategy implements DrawStrategy {
 		x: number,
 		y: number,
 	): void {
+		ctx!.strokeStyle = ColorContext.colorCtx.getColor();
 		ctx!.beginPath();
 		ctx!.moveTo(fromX, fromY);
 		ctx!.lineTo(x, y);

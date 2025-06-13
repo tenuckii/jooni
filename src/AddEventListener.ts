@@ -1,11 +1,12 @@
 import DrawContext from "./2dContext/draw/DrawContext";
 import { PixelStrategy } from "./2dContext/draw/lib";
 import Canvas from "./Canvas";
+import ColorContext from "./color/ColorContext";
 import Cursor from "./cursor/Cursor";
 import { IndexTool } from "./cursor/tools/IndexTool";
 
 const drawCtx = new DrawContext(null, Canvas.ctx);
-
+const colorCtx = ColorContext.getInstance();
 const canIn = Canvas.getInstance();
 const curIn = Cursor.getInstance();
 

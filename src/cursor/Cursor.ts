@@ -60,11 +60,8 @@ export default class Cursor {
 		this.currentTool = getToolByState(state);
 		this.applyState();
 
-		if(this.currentTool.canDraw())
-			renderColorPalette();
-		else
-			unRenderColorPalette();
-		
+		if (this.currentTool.canDraw()) renderColorPalette();
+		else unRenderColorPalette();
 
 		if (document.body.contains(this.cursorMenu)) {
 			document.body.removeChild(this.cursorMenu);
@@ -75,5 +72,4 @@ export default class Cursor {
 		this.iconElement.className = `bi ${this.currentTool.getIcon()} fs-4`;
 		document.body.style.cursor = this.currentTool.getCursorStyle();
 	}
-
 }
